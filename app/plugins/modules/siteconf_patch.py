@@ -7,13 +7,13 @@ log.info(f"【Plugin】加载 SiteConf Patch！")
 
 SiteConf()._SITE_CHECKIN_XPATH.append('//img[@id="fx_checkin_b"]')
 
-SiteConf()._SITE_LOGIN_XPATH["captcha"].insert(0, '//input[@name="seccodeverify"]')
+SiteConf()._SITE_LOGIN_XPATH["captcha"].append('//input[contains(@id, "seccodeverify_")]')
 
-SiteConf()._SITE_LOGIN_XPATH["captcha_img"].insert(0, '//span[contains(@id, "vseccode_")]//img')
+SiteConf()._SITE_LOGIN_XPATH["captcha_img"].append('//span[contains(@id, "vseccode_")]//img/@src')
 
-SiteConf()._SITE_LOGIN_XPATH["submit"].insert(0, '//button[@name="loginsubmit"]')
+SiteConf()._SITE_LOGIN_XPATH["submit"].append('//button[@name="loginsubmit"]')
 
-SiteConf()._SITE_LOGIN_XPATH["error"].insert(0, '//div[@id="ntcwin"]//div[contains(@class, "pc_inner")]')
+SiteConf()._SITE_LOGIN_XPATH["error"].append('//div[@id="ntcwin"]//div[contains(@class, "pc_inner")]/text()')
 
 _SiteHelper_is_logged_in = SiteHelper.is_logged_in
 
@@ -24,8 +24,7 @@ def SiteHelper_is_logged_in(html_text=None):
     html = etree.HTML(html_text)
     # 是否存在登出和用户面板等链接
     xpaths = [
-        '//p[@id="succeedmessage"]',
-        '//p[@id="succeedlocation"]',
+        '//div[@id="main_succeed" and not(contains(@style, "none"))]',
         '//a[@id="myitem"]',
     ]
     for xpath in xpaths:
