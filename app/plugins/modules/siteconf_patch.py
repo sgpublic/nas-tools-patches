@@ -5,7 +5,8 @@ from lxml import etree
 
 log.info(f"【Plugin】加载 SiteConf Patch！")
 
-SiteConf()._SITE_CHECKIN_XPATH.append('//img[@id="fx_checkin_b"]')
+SiteConf()._SITE_CHECKIN_XPATH.append('//a[@id="k_misign_topb"]')
+SiteConf()._SITE_CHECKIN_XPATH.append('//i[@id="k_misign_topb"]//a')
 
 SiteConf()._SITE_LOGIN_XPATH["captcha"].append('//input[contains(@id, "seccodeverify_")]')
 
